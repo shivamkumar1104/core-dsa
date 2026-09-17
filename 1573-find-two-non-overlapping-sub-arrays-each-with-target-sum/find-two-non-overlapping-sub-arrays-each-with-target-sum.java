@@ -19,6 +19,7 @@ class Solution {
                 dp[j + 1] = Math.min(dp[j], j - i + 1);
             }
         }
+        //hi
 
         return res == n + 1 ? -1 : res;
     }
