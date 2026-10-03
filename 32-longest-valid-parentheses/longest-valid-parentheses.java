@@ -1,25 +1,41 @@
 class Solution {
     public int longestValidParentheses(String s) {
-        Stack<Integer> st = new Stack<>();
-        int res = 0;
-        st.push(-1);
+        int open = 0, close = 0;
+        int max = 0;
+        for(int i = 0; i<s.length(); i++){
+            char c = s.charAt(i);
+            if(c == '(')
+                open++;
+            else
+                close++;
 
-        for(int i = 0; i< s.length(); i++){
-            if(s.charAt(i) == '('){
-                st.push(i);
+            if(open  == close){
+                int len = open + close;
+                max = Math.max(max, len);
 
-            }else{
-                st.pop();
-                if(st.isEmpty()){
-                    st.push(i);
-
-                }else{
-                    res = Math.max(res, i-st.peek());
-                }
+            }else if(open < close){
+                open = close = 0;
             }
         }
-        return res;
+        open = close = 0;
+        for(int i = s.length()-1; i>= 0; i--){
+            char c = s.charAt(i);
+            if(c == '('){
+                open++;
+             }else{
+                close++;
+
+            }
+            if(open == close){
+                int len = open + close;
+                max = Math.max(max, len);
+            }
+            else if(close < open){
+                open = close = 0;
+            }
+
+        
+        }
+        return max;
     }
 }
-
-// TC = O(n)  SC = O(n)
