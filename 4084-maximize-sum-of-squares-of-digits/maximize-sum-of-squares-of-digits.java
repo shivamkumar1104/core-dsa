@@ -1,7 +1,17 @@
 class Solution {
     public String maxSumOfSquares(int num, int sum) {
-        if (sum > 9 * num) return "";  // even all 9s can't reach the sum
-        int nines = sum / 9, rest = sum % 9;
-        return ("9".repeat(nines) + rest + "0".repeat(num)).substring(0, num);  // 9s, then the rest, then zeros
+        // Step 1: the biggest possible digit sum is 9 * num
+        if (sum > 9 * num) return "";
+
+        StringBuilder ans = new StringBuilder();
+
+        // Step 2: fill every position from left to right
+        while (num-- > 0) {
+            int digit = Math.min(9, sum);   // take as much as we can, at most 9
+            ans.append(digit);
+            sum -= digit;
+        }
+
+        return sum == 0 ? ans.toString() : "";
     }
 }
